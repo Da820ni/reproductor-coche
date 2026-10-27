@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Prueba Reproductor</title>
+  <meta name="theme-color" content="#111418">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Prueba Coche">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <style>
+    :root {
+      --bg: #111418;
+      --panel: #1c2128;
+      --text: #f2f4f7;
+      --muted: #9aa4b2;
+      --accent: #3ddc84;
+      --warn: #ffb020;
+      --error: #ff5a5a;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--text); }
+    body {
+      font: 17px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: calc(env(safe-area-inset-top) + 12px) 16px calc(env(safe-area-inset-bottom) + 16px);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 20px; margin: 0 0 4px; }
+    .status { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+    .status.warn { color: var(--warn); }
+    .now {
+      background: var(--panel);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .now-title { font-size: 22px; font-weight: 600; word-break: break-word; min-height: 1.4em; }
+    .now-sub { color: var(--muted); font-size: 15px; margin-top: 4px; }
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    button {
+      font: inherit;
+      color: var(--text);
+      background: var(--panel);
+      border: 0;
+      border-radius: 16px;
+      min-height: 64px;
+      padding: 8px 12px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button:active { transform: scale(0.97); }
+    .controls button { min-height: 96px; font-size: 34px; }
+    .controls .play { background: var(--accent); color: #0b1a10; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .row button { flex: 1 1 140px; font-size: 16px; }
+    .import { background: #2b3440; }
+    ol { padding-left: 24px; margin: 0 0 16px; }
+    li { padding: 6px 0; word-break: break-word; }
+    li.current { color: var(--accent); font-weight: 600; }
+    details { background: var(--panel); border-radius: 16px; padding: 12px 16px; }
+    summary { font-weight: 600; cursor: pointer; }
+    #log {
+      font: 12px/1.45 ui-monospace, Menlo, monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 50vh;
+      overflow-y: auto;
+      margin: 12px 0;
+    }
+    #log .error { color: var(--error); }
+    #log .warn { color: var(--warn); }
+    input[type=file] { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Prueba del reproductor</h1>
+  <p class="status" id="status">Cargando…</p>
+
+  <section class="now">
+    <div class="now-title" id="title">Sin canciones</div>
+    <div class="now-sub" id="sub">Importa 3 o más MP3 desde Archivos</div>
+  </section>
+
+  <div class="controls">
+    <button id="prev" aria-label="Anterior">⏮</button>
+    <button id="play" class="play" aria-label="Reproducir">▶</button>
+    <button id="next" aria-label="Siguiente">⏭</button>
+  </div>
+
+  <div class="row">
+    <button id="import" class="import">Importar MP3</button>
+    <button id="wake">Pantalla encendida: no</button>
+  </div>
+
+  <ol id="list"></ol>
+
+  <details id="logbox">
+    <summary>Registro de eventos</summary>
+    <div id="log"></div>
+    <div class="row">
+      <button id="copylog">Copiar registro</button>
+      <button id="clearlog">Borrar registro</button>
+      <button id="clearall">Borrar canciones</button>
+    </div>
+  </details>
+
+  <input type="file" id="file" accept="audio/*,.mp3,.m4a,.aac,.flac" multiple>
+  <audio id="audio" preload="auto" playsinline></audio>
+
+  <script src="app.js"></script>
+</body>
+</html>

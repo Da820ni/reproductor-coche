@@ -1,0 +1,7 @@
+# La música nunca se sube: se importa desde Archivos del iPhone.
+*.mp3
+*.m4a
+*.aac
+*.flac
+*.wav
+*.ogg
